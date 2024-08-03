@@ -148,14 +148,18 @@ var copyObjectDeep = function (target) {
 -   객체의 존재하지 않는 프로퍼티 접근
 -   반환 값이 없는 함수
 
+```javascript
+var obj = { a: 1 };
+console.log(obj.a); // 1
+console.log(obj.b); // 객체의 존재하지 않는 프로퍼티 접근
+console.log(b); // 반환 값이 없는 함수
+```
+
 ### 6-2. `null`
 
 -   명시적으로 ‘비어있음’을 나타내고 싶을 때 사용
 
 ```javascript
 var n = null;
-console.log(typeof n); // object
-
-console.log(n === undefined); // false
-console.log(n === null); // true
+console.log(n); // null
 ```
