@@ -22,3 +22,7 @@ const greet = function() {
 const greet = function greeting() {
     return "Hello!";
 };
+
+
+https://taenami.tistory.com/87 
+tdz란?
