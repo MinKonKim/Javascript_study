@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import "./App.css";
 import DuplicateTest from "./components/DuplicateTest";
-import UseEffectTest from "./components/UseEffectTest";
 import ZustandTest from "./components/ZustandTest";
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
   return (
     <>
       <DuplicateTest />
-      <UseEffectTest testObj={testObj} />
+      {/* <UseEffectTest testObj={testObj} /> */}
       <ZustandTest />
     </>
   );
