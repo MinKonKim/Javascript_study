@@ -20,4 +20,25 @@ GPT정리
 
 스코프 체인이란?
 '식별자의 유효범위'를 안에서부터 바깥으로 차례대로 검색해나가는 것
-이를 가능하게 하는건 
+이를 가능하게 하는건 LexicalEnvironment의 outerEnvironmentReference이다.
+
+outerEnvironmentReference는 현재 호출된 함수가 선언될 당시의 LexicalEnvironment를 참조한다.
+
+
+
+outerEnvironmentReference 기본 개념:
+outerEnvironmentReference는 함수가 생성될 때 그 함수가 정의된 위치의 외부 환경을 참조하는 속성이다.
+이는 함수가 속한 렉시컬 환경(Lexical Environment)을 가리키며, 스코프 체인의 일부로 작용한다.
+
+작동 원리:
+함수가 실행될 때, 자바스크립트 엔진은 해당 함수의 스코프에서 변수를 찾고, 없다면 outerEnvironmentReference를 따라 상위 스코프로 이동해 변수를 찾는다.
+이 과정은 필요한 변수를 찾거나 글로벌 스코프에 도달할 때까지 계속된다.
+
+클로저와의 관계:
+outerEnvironmentReference는 클로저를 형성하는 데 중요한 역할을 한다.
+함수가 외부 스코프의 변수를 참조할 경우, 이 참조는 함수가 실행된 후에도 유지될 수 있으며, 이를 통해 클로저가 형성된다.
+
+요약:
+outerEnvironmentReference는 함수가 정의된 위치를 기준으로 변수 접근 범위를 결정하고, 이는 스코프 체인에 따라 외부 환경과 연결된다. 이를 통해 자바스크립트는 함수 내외의 변수를 효율적으로 관리할 수 있다.
+
+**이런 구조적 특성으로 여러 스코프에서 동일한 식별자를 선언한 경우 *무조건 스코프 체인 상에서 가장 먼저 발견된 식별자에만 접근 가능하다.
