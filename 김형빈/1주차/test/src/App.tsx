@@ -1,14 +1,14 @@
 import "./App.css";
-import HoistingTest from "./components/HoistingTest";
+import ThisTest from "./components/ThisTest";
 
 function App() {
-
   return (
     <>
       {/* <DuplicateTest /> */}
       {/* <UseEffectTest testObj={testObj} /> */}
       {/* <ZustandTest /> */}
-      <HoistingTest/>
+      {/* <HoistingTest/> */}
+      <ThisTest />
     </>
   );
 }
