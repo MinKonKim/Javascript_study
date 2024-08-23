@@ -10,7 +10,7 @@
 
 브라우저 환경
 
-```
+```javascript
 console.log(this);
 console.log(window);
 console.log(this === window); //true
@@ -18,7 +18,7 @@ console.log(this === window); //true
 
 Node.js 환경
 
-```
+```javascript
 console.log(this);
 console.log(global);
 console.log(this === global); //true
@@ -26,8 +26,8 @@ console.log(this === global); //true
 
 전역변수와 전역객체
 
-```
-var a = 1
+```javascript
+var a = 1;
 console.log(a); //1
 console.log(window.a); //1
 console.log(this.a); //1
@@ -47,17 +47,17 @@ console.log(this.a); //1
 
 함수는 그 자체로 독립적인 기능을 수행하는 것이고, 메서드는 자신을 호출한 대상 객체에 관한 동작을 수행하는 것이다. 이 둘의 호출 방식은 함수 앞에 점(.)이 있는지 여부로 간단하게 구분할 수 있다.
 
-```
-var func = function(x) {
-console.log(this, x);
-}
+```javascript
+var func = function (x) {
+    console.log(this, x);
+};
 
 //함수로서 호출
 func(1); // window, 1
 
 var obj = {
-method: func
-}
+    method: func,
+};
 
 //메서드로서 호출
 obj.method(2); //{ method: [Function: func] } 2
@@ -69,11 +69,16 @@ obj.method(2); //{ method: [Function: func] } 2
 메서드로서 내부의 this에는 호출한 주체에 대한 정보가 담긴다.
 호출한 메서드 바로 앞의 주체에 대한 정보가 담긴다.
 
-```
+```javascript
 var obj = {
-    methodA: function(){console.log(this);},
-    inner: {methodB: function(){console.log(this);}
-    }
+    methodA: function () {
+        console.log(this);
+    },
+    inner: {
+        methodB: function () {
+            console.log(this);
+        },
+    },
 };
 
 // methodA 호출 주체는 obj
@@ -98,23 +103,23 @@ obj['inner']['methodB'](); // obj.inner
 
 메서드 내부의 함수에서도 함수로서 호출되는 경우는 전역 객체를 가리킨다.
 
-```
+```javascript
 var obj1 = {
-    outer: function() {
+    outer: function () {
         console.log(this);
 
-        var innerFunc = function() {
+        var innerFunc = function () {
             console.log(this);
-        }
+        };
 
         innerFunc(); //window (전역객체)
 
         var obj2 = {
-            innerMethod: innerFunc
+            innerMethod: innerFunc,
         };
 
         obj2.innerMethod(); //obj2
-    }
+    },
 };
 
 obj1.outer(); //obj1
@@ -129,21 +134,16 @@ obj1.outer(); //obj1
 
 이러한 문제점을 해결하기 위해 등장한 것이 화살표 함수이다. ES6에서는 함수 내부에서 this가 전역객체를 바라보는 문제를 보완하고자, this를 바인딩하지 않는 화살표 함수를 도입했다. 화살표 함수는 실행 컨텍스트를 생성할 때 this 바인딩 과정 자체가 빠지게 되어, 상위 스코프의 this를 그대로 활용할 수 있다.
 
-```
+```javascript
 var obj1 = {
-outer: function() {
-console.log(this);
-
+    outer: function () {
+        console.log(this);
         var innerFunc = () => {
             console.log(this);
-        }
-
+        };
         innerFunc(); //obj1 (상위 스코프의 this)
-
-    }
-
+    },
 };
-
 obj1.outer(); //obj1
 ```
 
@@ -153,7 +153,7 @@ obj1.outer(); //obj1
 콜백 함수도 함수이기 때문에 기본적으로는 this가 전역 객체를 참조한다.
 하지만 제어권을 받은 함수에서 콜백 함수에 별도로 this가 될 대상을 지정한 경우에는 그 대상을 가리킨다.
 
-```
+```javascript
 // 0.3초 뒤에 전역객체 출력
 setTimeout(function() { console.log(this); //window }, 300);
 
@@ -176,11 +176,11 @@ console.log(this, e); // button element, 이벤트 객체
 생성자 함수는 공통된 성질을 지니는 객체들을 생성하는 데 사용하는 함수로, new 명령어와 함께 함수를 호출하면 해당 함수가 생성자 함수로서 동작한다.
 생성자 함수로서 호출되는 경우 내부에서의 this는 곧 새로 만들 구체적인 인스턴스 자신이 된다.
 
-```
-var Cat = function(name, age){
-this.bark = '야옹';
-this.name = name;
-this.age = age;
+```javascript
+var Cat = function (name, age) {
+    this.bark = '야옹';
+    this.name = name;
+    this.age = age;
 };
 
 var choco = new Cat('초코', 7);
@@ -201,14 +201,14 @@ console.log(nabi); //Cat { bark: '야옹, name: '나비', age: 5 }
 call 메서드는 호출 주체인 함수를 즉시 실행하도록 하는 명령으로, 첫 번째 인자를 this로 바인딩하고 이후의 인자들을 호출할 함수의 매개변수로 전달하면 된다.
 apply 메서드는 call과 동일한 역할을 수행하며, 두 번째 인자를 배열로 받는다는 점만 다르다.
 
-```
+```javascript
 var func = function (a, b, c) {
-console.log(this, a, b, c);
-}
+    console.log(this, a, b, c);
+};
 
 func(1, 2, 3); // window 1 2 3
-func.call({x: 1}, 4, 5, 6); // {x: 1} 4 5 6
-func.apply({x: 2}, [4, 5, 6]); // {x: 2} 4 5 6
+func.call({ x: 1 }, 4, 5, 6); // {x: 1} 4 5 6
+func.apply({ x: 2 }, [4, 5, 6]); // {x: 2} 4 5 6
 ```
 
 #### 3-2-3 call, apply 메서드 활용
@@ -222,19 +222,19 @@ bind 메서드는 call과 비슷하지만, 즉시 호출하지 않고 넘겨받�
 함수에 this를 미리 적용할 때 혹은 부분 적용 함수를 구현할 때 활용할 수 있다.
 bind를 통해 새로 만든 함수는 name 프로퍼티에 bound라는 접두어가 붙는다는 특징이 있다. 따라서 call이나 apply보다 코드를 추적하기 수월하다.
 
-```
-var func = function(a, b, c, d){
-console.log(this, a, b, c, d);
+```javascript
+var func = function (a, b, c, d) {
+    console.log(this, a, b, c, d);
 };
 
 func(1, 2, 3, 4); //window 1 2 3 4
 
 //this 적용
-var bindFunc1 = func.bind({ x:1 });
+var bindFunc1 = func.bind({ x: 1 });
 bindFunc1(5, 6, 7, 8); //{ x:1 } 5 6 7 8
 
 //부분 함수 적용
-var bindFunc2 = func.bind({ x:1 }, 4, 5);
+var bindFunc2 = func.bind({ x: 1 }, 4, 5);
 bindFunc2(6, 7); //{ x:1 } 4 5 6 7
 bindFunc2(8, 9); //{ x:1 } 4 5 8 9
 ```
