@@ -10,7 +10,7 @@
 
 브라우저 환경
 
-```
+``` javascript
 console.log(this);
 console.log(window);
 console.log(this === window); //true
@@ -18,7 +18,7 @@ console.log(this === window); //true
 
 Node.js 환경
 
-```
+``` javascript
 console.log(this);
 console.log(global);
 console.log(this === global); //true
@@ -26,7 +26,7 @@ console.log(this === global); //true
 
 전역변수와 전역객체
 
-```
+``` javascript
 var a = 1
 console.log(a); //1
 console.log(window.a); //1
@@ -47,7 +47,7 @@ console.log(this.a); //1
 
 함수는 그 자체로 독립적인 기능을 수행하는 것이고, 메서드는 자신을 호출한 대상 객체에 관한 동작을 수행하는 것이다. 이 둘의 호출 방식은 함수 앞에 점(.)이 있는지 여부로 간단하게 구분할 수 있다.
 
-```
+``` javascript
 var func = function(x) {
 console.log(this, x);
 }
@@ -69,7 +69,7 @@ obj.method(2); //{ method: [Function: func] } 2
 메서드로서 내부의 this에는 호출한 주체에 대한 정보가 담긴다.
 호출한 메서드 바로 앞의 주체에 대한 정보가 담긴다.
 
-```
+``` javascript
 var obj = {
     methodA: function(){console.log(this);},
     inner: {methodB: function(){console.log(this);}
@@ -98,7 +98,7 @@ obj['inner']['methodB'](); // obj.inner
 
 메서드 내부의 함수에서도 함수로서 호출되는 경우는 전역 객체를 가리킨다.
 
-```
+``` javascript
 var obj1 = {
     outer: function() {
         console.log(this);
@@ -129,7 +129,7 @@ obj1.outer(); //obj1
 
 이러한 문제점을 해결하기 위해 등장한 것이 화살표 함수이다. ES6에서는 함수 내부에서 this가 전역객체를 바라보는 문제를 보완하고자, this를 바인딩하지 않는 화살표 함수를 도입했다. 화살표 함수는 실행 컨텍스트를 생성할 때 this 바인딩 과정 자체가 빠지게 되어, 상위 스코프의 this를 그대로 활용할 수 있다.
 
-```
+``` javascript
 var obj1 = {
 outer: function() {
 console.log(this);
