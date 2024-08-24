@@ -31,32 +31,34 @@
 //   console.log(this, e);
 // });
 
-// //bind 함수 이름 확인
-// var func = function (a, b, c, d) {
-// 	console.log(this, a, b, c, d);
-// };
-// var bindFunc = func.bind({ x:1 }, 4, 5);
+//bind 함수 이름 확인
+var func = function (a, b, c, d) {
+	console.log(this, a, b, c, d);
+};
+var bindFunc = func.bind({ x:1 }, 4, 5);
+var bindFunc2 = func.call({ x: 1 }, 4, 5);
 
-// console.log(func.name); // func
-// console.log(bindFunc.name); // bound func
+console.log(func.name); // func
+console.log(bindFunc);
+console.log(bindFunc2); 
 
 // bind 메서드 - 내부 함수에 this 전달
 
-var obj = {
-  logThis: function () {
-    console.log(this);
-  },
-  logThisLater1: function () {
-    setTimeout(this.logThis, 500);
-  },
-  logThisLater2: function () {
-    setTimeout(this.logThis.bind(this), 1000);
-  },
-  logThisLater3: function () {
-    setTimeout(this.logThis.call(this), 2000);
-  },
-};
+// var obj = {
+//   logThis: function () {
+//     console.log(this);
+//   },
+//   logThisLater1: function () {
+//     setTimeout(this.logThis, 500);
+//   },
+//   logThisLater2: function () {
+//     setTimeout(this.logThis.bind(this), 1000);
+//   },
+//   logThisLater3: function () {
+//     setTimeout(this.logThis.call(this), 2000);
+//   },
+// };
 
-obj.logThisLater1();
-obj.logThisLater2();
-obj.logThisLater3();
+// obj.logThisLater1();
+// obj.logThisLater2();
+// obj.logThisLater3();
