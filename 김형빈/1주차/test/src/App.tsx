@@ -1,5 +1,6 @@
 import "./App.css";
 import ThisTest from "./components/ThisTest";
+import ThisTest2 from "./components/ThisTest2";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       {/* <ZustandTest /> */}
       {/* <HoistingTest/> */}
       <ThisTest />
+      <ThisTest2 />
     </>
   );
 }
