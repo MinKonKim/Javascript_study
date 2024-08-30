@@ -33,14 +33,14 @@
 
 //bind 함수 이름 확인
 var func = function (a, b, c, d) {
-	console.log(this, a, b, c, d);
+  console.log(this, a, b, c, d);
 };
-var bindFunc = func.bind({ x:1 }, 4, 5);
+var bindFunc = func.bind({ x: 1 }, 4, 5);
 var bindFunc2 = func.call({ x: 1 }, 4, 5);
 
 console.log(func.name); // func
 console.log(bindFunc);
-console.log(bindFunc2); 
+console.log(bindFunc2);
 
 // bind 메서드 - 내부 함수에 this 전달
 
