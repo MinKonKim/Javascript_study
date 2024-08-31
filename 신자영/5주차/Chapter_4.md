@@ -4,12 +4,7 @@
 
 ## 4-1 콜백함수란
 
--   **콜백 함수**: 다른 코드의 인자로 넘겨주는 함수로, 제어권을 다른 코드에 위임하는 방식과 관련이 있습니다.
-    -   콜백 함수는 다른 코드(함수 또는 메서드)에 인자로 넘겨져 제어권을 위임받은 코드가 적절한 시점에 실행하게 됩니다.
-        EX)  
-         스폰지밥에 직접 시간을 가늠해서 6시에 일어나는것 = 제어권은 스폰지밥에 있음
-        스폰지밥이 알람시계를 맞춰두고 일어나는것 =
-        제어권은 알람시계에 있음
+콜백 함수: 다른 함수의 인자로 넘겨져, 제어권을 위임받은 코드가 적절한 시점에 실행하는 함수입니다. 예를 들어, 스폰지밥이 직접 일어나는 대신 알람시계를 맞춰놓고 일어나는 경우처럼 제어권을 알람시계에 넘기는 개념입니다.
 
 ---
 
@@ -19,7 +14,6 @@
 
 호출 시점 - 제어권을 넘겨받은 함수는 그 함수의 호출 시점에 대한 제어권도 가진다.
 
--   예시: `setInterval` 콜백 함수
     ```javascript
     var count = 0;
     var cbFunc = function () {
@@ -40,7 +34,7 @@
 
 인자 - 콜백 함수를 넘겨받을 함수를 정의할 때, 그 콜백 함수의 인자를 넘겨받을 함수가 지정할 수 있다.
 
-**`map`** 함수는 각 배열 요소를 변환하여 새로운 배열을 반환합니다. **기존 배열을 변경하지 않고**, 새로운 배열을 생성한다는 것을 알고 계시죠? 👍👍
+**`map`** 함수는 각 배열 요소를 변환하여 새로운 배열을 반환합니다. **기존 배열을 변경하지 않고**, 새로운 배열을 생성
 
 ```javascript
 // map 함수에 의해 새로운 배열을 생성해서 newArr에 담고 있네요!
@@ -57,7 +51,7 @@ console.log(newArr);
 // [ 15, 25, 35 ]
 ```
 
-그렇다면 콜백함수에서 여러분이 넣으신 **`currentValue, index`** 이 변수의 순서를 바꾸면 어떻게 될까요? 자동으로 인식할까요?
+그렇다면 콜백함수에서 여러분이 넣으신 **`currentValue, index`** 이 변수의 순서를 바꾸면?
 
 ```javascript
 // map 함수에 의해 새로운 배열을 생성해서 newArr에 담고 있네요!
@@ -74,9 +68,9 @@ console.log(newArr2);
 // [ 5, 6, 7 ]
 ```
 
-컴퓨터는 사람이 아니기 때문에, **`index - currentValue`**의 의미를 사람처럼 이해할 수 없어요. 따라서 의도하지 않은 값이 나와버리죠.
+컴퓨터는 사람이 아니기 때문에, **`index - currentValue`**의 의미를 사람처럼 이해할 수 없다. 따라서 의도하지 않은 값이 나와버림
 
-이처럼, map 메서드를 호출해서 원하는 배열을 얻고자 한다면 정의된 규칙대로 작성해야 해요(콜백 내부의 인자도 물론 포함이죠!) 이 모든것은 전적으로 map 메서드. 즉, 콜백 함수를 넘겨받은 코드에게 그 제어권이 있습니다.
+map 메서드를 호출해서 원하는 배열을 얻고자 한다면 정의된 규칙대로 작성, 이 모든것은 전적으로 map 메서드. 즉, 콜백 함수를 넘겨받은 코드에게 그 제어권이 있습니다.
 인자(의 순서)까지도 제어권이 그에게 있는 것
 
 #### 4-2-2 this
@@ -264,7 +258,7 @@ callback3의 경우 obj1의 func를 실행하면서 this를 obj3가 되도록 �
     -   익명 함수를 기명 함수로 변환해 가독성을 높이고, 코드의 흐름을 단순화합니다.
     -   단점: 일회성 함수를 모두 변수에 할당하고, 함수명을 따라가야 하는 번거로움이 있습니다.
 
--   **비동기 작업의 동기적 표현 - Promise**
+-   **비동기 작업의 동기적 표현(1) - Promise**
 
     ```javascript
     new Promise(function (resolve) {
@@ -274,6 +268,15 @@ callback3의 경우 obj1의 func를 실행하면서 this를 obj3가 되도록 �
             resolve(name);
         }, 500);
     })
+        .then(function (prevName) {
+            return new Promise(function (resolve) {
+                setTimeout(function () {
+                    var name = prevName + ', 아메리카노';
+                    console.log(name);
+                    resolve(name);
+                }, 500);
+            });
+        })
         .then(function (prevName) {
             return new Promise(function (resolve) {
                 setTimeout(function () {
@@ -293,6 +296,60 @@ callback3의 경우 obj1의 func를 실행하면서 this를 obj3가 되도록 �
             });
         });
     ```
+
+-   **비동기 작업의 동기적 표현(2) - Promise**
+
+직전 예제의 반복부분을 함수화 한 코드에요. trigger를 걸어주기 위해 클로저 개념이 나왔지만, 여기서는 skip 하고, 다음 chapter에서 다루게 될거에요!
+
+```javascript
+var addCoffee = function (name) {
+    return function (prevName) {
+        return new Promise(function (resolve) {
+            setTimeout(function () {
+                var newName = prevName ? prevName + ', ' + name : name;
+                console.log(newName);
+                resolve(newName);
+            }, 500);
+        });
+    };
+};
+
+addCoffee('에스프레소')().then(addCoffee('아메리카노')).then(addCoffee('카페모카')).then(addCoffee('카페라떼'));
+```
+
+-   **비동기 작업의 동기적 표현(3) - Generator**
+
+Generator 객체는 generator function 으로부터 반환되며, 반복 가능한 프로토콜과 반복자 프로토콜을 모두 준수한다.
+
+Generator는 다음과 같은 메서드를 가진다.
+
+Generator.prototype.next() : yield 표현식을 통해 yield된 값을 반환한다.
+Generator.prototype.return() : 주어진 값을 반환하고 제너레이터를 종료한다.
+Generator.prototype.throw() : 제너레이터에 오류를 발생시킨다. (해당 제너레이터 내에서 오류가 발생한 경우가 아닌 한 제너레이터도 완료)
+
+```javascript
+var addCoffee = function (prevName, name) {
+    setTimeout(function () {
+        coffeeMaker.next(prevName ? prevName + ', ' + name : name);
+    }, 500);
+};
+var coffeeGenerator = function* () {
+    var espresso = yield addCoffee('', '에스프레소');
+    console.log(espresso);
+    var americano = yield addCoffee(espresso, '아메리카노');
+    console.log(americano);
+    var mocha = yield addCoffee(americano, '카페모카');
+    console.log(mocha);
+    var latte = yield addCoffee(mocha, '카페라떼');
+    console.log(latte);
+};
+var coffeeMaker = coffeeGenerator();
+coffeeMaker.next();
+```
+
+Generator 함수를 실행하면 Itertator가 반환되는데, Iterator는 next라는 메서드를 가지고 있다. 이 next 메서드를 호출하면 Generator 함수 내부에서 가장 먼저 등장하는 yield에서 함수의 실행을 멈춘다. 이후 다시 next 메서드를 호출하면 앞서 멈췄던 부분부터 시작해서 그다음에 등장하는 yield에서 함수의 실행을 멈춘다.
+
+따라서 비동기 작업이 완료되는 시점마다 next 메서드를 호출한다면, Generator 함수 내부의 소스가 위에서부터 아래로 순차적으로 진행된다.
 
 -   **비동기 작업의 동기적 표현(4) - Promise + Async/await**
 
