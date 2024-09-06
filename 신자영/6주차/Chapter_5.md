@@ -100,10 +100,92 @@ fruits.forEach(function (fruit) {
 });
 ```
 
-### 5-3-2 접근 권한 제어(정보은닉)
+#### 5-3-2 접근 권한 제어(정보은닉)
 
--   정보 은닉: 모듈 내부 로직을 외부에 노출하지 않고 유지보수성을 높임.
--   자바스크립트에서의 정보 은닉: 클로저를 사용해 private과 public 멤버를 구분할 수 있음.
+-   정보 은닉은 모듈의 내부 로직을 외부에 노출하지 않고, 모듈 간 결합도를 낮춰 유연성을 높이는 개념입니다.
+-   이를 통해 모듈 내부 구현이 외부 코드에 영향을 주지 않게 하며, 유지보수성 및 코드의 안전성을 높입니다.
+-   접근 제어 수준은 `public`, `private`, `protected`가 있습니다.
+    -   public: 외부에서 접근 가능.
+    -   private: 내부에서만 접근 가능.
+
+자바스크립트에서의 정보 은닉
+
+-   자바스크립트는 클로저를 사용해 함수 차원에서 public과 private 값을 구분할 수 있습니다.
+-   외부에 제공할 정보는 public member로, 내부에서만 사용할 정보는 private member로 분리하여 접근 권한을 제어할 수 있습니다.
+
+###### 정보 은닉을 적용하지 않은 예시
+
+```javascript
+var car = {
+    fuel: Math.ceil(Math.random() * 10 + 10), // 연료(L)
+    power: Math.ceil(Math.random() * 3 + 2), // 연비(km/L)
+    moved: 0, // 총 이동거리
+    run: function () {
+        var km = Math.ceil(Math.random() * 6);
+        var wasteFuel = km / this.power;
+        if (this.fuel < wasteFuel) {
+            console.log('이동불가');
+            return;
+        }
+        this.fuel -= wasteFuel;
+        this.moved += km;
+        console.log(km + 'km 이동 (총 ' + this.moved + 'km)');
+    },
+};
+```
+
+-   이 코드는 기능적으로는 문제가 없지만, 외부에서 내부 변수(fuel, power, moved)를 마음대로 조작할 수 있다는 문제가 있습니다.
+-   따라서, 클로저를 활용해 정보 은닉을 적용해야 합니다.
+
+###### 클로저를 활용한 정보 은닉 예시
+
+```javascript
+var createCar = function () {
+    var fuel = Math.ceil(Math.random() * 10 + 10); // 연료(L)
+    var power = Math.ceil(Math.random() * 3 + 2); // 연비(km/L)
+    var moved = 0; // 총 이동거리
+    return {
+        get moved() {
+            return moved; // moved 값은 외부에서 읽기만 가능
+        },
+        run: function () {
+            var km = Math.ceil(Math.random() * 6);
+            var wasteFuel = km / power;
+            if (fuel < wasteFuel) {
+                console.log('이동불가');
+                return;
+            }
+            fuel -= wasteFuel;
+            moved += km;
+            console.log(km + 'km 이동 (총 ' + moved + 'km). 남은 연료: ' + fuel);
+        },
+    };
+};
+var car = createCar();
+```
+
+-   이 코드에서는 `fuel`, `power`는 private member로, 외부에서 접근할 수 없습니다.
+-   `moved`는 getter를 통해 읽기 전용으로 제공됩니다.
+-   외부에서는 `run` 메서드로 자동차를 움직일 수 있고, `moved` 값을 확인할 수 있습니다. 하지만 `fuel`이나 `power`에는 직접 접근할 수 없습니다.
+
+```javascript
+	 var createCar = function () { ..
+...
+	 var publicMembers = { ..
+...
+	 };
+	 Object.freeze(publicMembers);
+	 return publicMembers;
+	 };
+```
+
+-   `Object.freeze()`를 사용하여 publicMembers 객체를 외부에서 수정할 수 없도록 만듭니다.
+-   이렇게 하면 외부에서 `run` 메서드를 덮어쓰거나 공개된 멤버의 변경을 막을 수 있습니다.
+
+###### 결론: 클로저를 활용한 접근 권한 제어
+
+-   외부에 접근 권한을 주고자 하는 대상은 참조형 데이터(여럿일 때는 객체 혹은 배열, 하나일 때는 함수)로 묶어 반환합니다.
+-   반환된 변수들은 공개 멤버가 되며, 그렇지 않은 변수들은 비공개 멤버로 남습니다.
 
 ### 5-3-3 부분 적용 함수
 
