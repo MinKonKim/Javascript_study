@@ -13,13 +13,13 @@
 
 #### 인스턴스 (Instance)
 
-인스턴스는 특정 클래스의 속성을 지니고 있는 실존하는 객체입니다. 하나의 인스턴스는 단 하나의 class만을 기반으로 만들어집니다.
+인스턴스는 단 하나의 class만을 기반으로 만들어진 실존하는 객체입니다
 
 ### 자바스크립트의 클래스
 
 -   생성자 함수 Array를 new 연산자와 함께 호출하면 인스턴스가 생성됩니다.
--   Array를 클래스라고 보면, Array의 prototype 객체 내부 요소들이 인스턴스에 '상속' 된다고 볼 수 있습니다. (정확히는 프로토타입 체이닝에 의한 참조)
--   인스턴스에 상속되는지(인스턴스가 참조되는지) 여부에 따라 **스태틱 멤버**(static methods와 static properties가 있는)와 프로토타입 메서드로 구분됩니다.
+-   Array를 일종의 클래스라고 하면, Array의 prototype 객체 내부 요소들이 인스턴스에 상속된다고 볼 수 있다.
+-   인스턴스에 상속되는지(인스턴스가 참조되는지) 여부에 따라 **스태틱 멤버**와 프로토타입 메서드로 구분됩니다.
 
 ![프로토타입 클래스 개념 적용](https://github.com/user-attachments/assets/80469b92-7a52-451a-be51-da95db410503)
 
@@ -42,13 +42,14 @@ Rectangle.isRectangle = function (instance) {
 
 var rect1 = new Rectangle(3, 4);
 
-console.log(rect1.getArea()); // 12
+console.log(rect1.getArea()); // 12\
+// 잘못된 호출: rect1은 스태틱 메서드를 호출할 수 없다.
 console.log(rect1.isRectangle()); // Error: rect1.isRectangle is not a function
 console.log(Rectangle.isRectangle(rect1)); // true
 ```
 
 -   getArea는 rect1.**proto**.getArea에 접근하는데, **proto**가 생략했으므로, this가 rect1채로 실행되어 해당 메서드의 값이 반환됩니다. 이처럼 인스턴스에 직접 호출할 수 있는 메서드가 프로토타입 메서드라고 합니다.
--   rect1에 isRectangle메서드가 있는지 검색했는데 없고, rect1.**proto**에도 없으며, Object.prototype에도 없는 걸 알고, 함수가 아니어서 실행할 수 없다는 에러가 발생합니다. 이렇게 인스턴스에서 직접 접근할 수 없는 메서드를 스태틱 메서드라고 합니다. 스태틱 메서드는 생성자 함수를 this로 해야 호출할 수 있습니다.
+-   rect1에 isRectangle메서드가 있는지 검색했는데 없고, rect1.**proto**에도 없으며, Object.prototype에도 없는 걸 알고, 함수가 아니어서 실행할 수 없다는 에러가 발생합니다. 이렇게 인스턴스에서 직접 접근할 수 없는 메서드를 스태틱 메서드라고 합니다.
 
 ### 클래스 상속
 
