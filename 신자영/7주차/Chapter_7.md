@@ -21,8 +21,6 @@
 -   Array를 일종의 클래스라고 하면, Array의 prototype 객체 내부 요소들이 인스턴스에 상속된다고 볼 수 있다.
 -   인스턴스에 상속되는지(인스턴스가 참조되는지) 여부에 따라 **스태틱 멤버**와 프로토타입 메서드로 구분됩니다.
 
-![프로토타입 클래스 개념 적용](https://github.com/user-attachments/assets/80469b92-7a52-451a-be51-da95db410503)
-
 ```javascript
 // 생성자
 var Rectangle = function (width, height) {
