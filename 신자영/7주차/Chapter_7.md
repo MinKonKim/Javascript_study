@@ -15,13 +15,13 @@
 
 인스턴스는 단 하나의 class만을 기반으로 만들어진 실존하는 객체입니다
 
+---
+
 ### 자바스크립트의 클래스
 
 -   생성자 함수 Array를 new 연산자와 함께 호출하면 인스턴스가 생성됩니다.
 -   Array를 일종의 클래스라고 하면, Array의 prototype 객체 내부 요소들이 인스턴스에 상속된다고 볼 수 있다.
 -   인스턴스에 상속되는지(인스턴스가 참조되는지) 여부에 따라 **스태틱 멤버**와 프로토타입 메서드로 구분됩니다.
-
-![프로토타입 클래스 개념 적용](https://github.com/user-attachments/assets/80469b92-7a52-451a-be51-da95db410503)
 
 ```javascript
 // 생성자
@@ -51,13 +51,7 @@ console.log(Rectangle.isRectangle(rect1)); // true
 -   getArea는 rect1.**proto**.getArea에 접근하는데, **proto**가 생략했으므로, this가 rect1채로 실행되어 해당 메서드의 값이 반환됩니다. 이처럼 인스턴스에 직접 호출할 수 있는 메서드가 프로토타입 메서드라고 합니다.
 -   rect1에 isRectangle메서드가 있는지 검색했는데 없고, rect1.**proto**에도 없으며, Object.prototype에도 없는 걸 알고, 함수가 아니어서 실행할 수 없다는 에러가 발생합니다. 이렇게 인스턴스에서 직접 접근할 수 없는 메서드를 스태틱 메서드라고 합니다.
 
-### 클래스 상속
-
-자바스크립트에서 클래스 상속을 구현하기 위한 방법은 여러 가지가 있습니다:
-
-1. **SubClass.prototype에 SuperClass의 인스턴스를 할당**하고, 필요한 프로퍼티를 삭제하는 방법.
-2. **빈 함수(Bridge)**를 활용하는 방법.
-3. **Object.create**를 이용하는 방법.
+---
 
 #### ES6의 클래스 및 클래스 상속
 
@@ -103,7 +97,6 @@ console.log(es6Instance.method()); // es6 method
 
 -   클래스 문법에서 constructor는 ES5의 생성자 함수와 동일한 역할을 수행합니다.
 -   static 키워드는 해당 메서드가 static 메서드임을 알리는 내용으로 생성자 함수(클래스) 자신만 호출할 수 있습니다.
--   method()는 prototype 객체 내부에 할당되는 메서드로, 인스턴스가 프로토타입 체이닝을 통해 자신의 것처럼 호출할 수 있는 메서드입니다.
 
 ### ES6의 클래스 상속 예시
 
@@ -138,6 +131,8 @@ square.getArea(); // size: 25
 -   ES6의 클래스 문법에서의 상속받는 SubClass를 만들기 위해 class 명령 뒤 extends 키워드와 상속받고 싶은 SuperClass를 적으면 상속 관계 설정이 끝납니다.
 -   constructor 내부에는 super라는 키워드를 함수처럼 사용할 수 있는데, 이는 SuperClass의 constructor를 실행합니다.
 
+---
+
 ### Static Method
 
 -   **정의 및 호출**: `static` 키워드로 정의된 메서드는 클래스 자체에 소속되며, 클래스의 인스턴스가 아닌 클래스 이름으로 호출할 수 있습니다. 이런 메서드는 객체의 상태에 접근할 수 없으므로, 일반적으로 인스턴스와 무관한 유틸리티 기능을 구현할 때 사용됩니다.
@@ -155,6 +150,8 @@ class MathHelper {
 
 console.log(MathHelper.add(2, 3)); // 5
 ```
+
+---
 
 ### Getter와 Setter
 
@@ -186,6 +183,8 @@ person.name = 'Jane';
 console.log(person.name); // Jane
 ```
 
+---
+
 ### 프라이빗 필드 및 접근 제어
 
 -   **프라이빗 필드**: `#` 기호를 사용하여 정의된 필드는 클래스 외부에서 접근할 수 없습니다. 이는 클래스의 내부 상태를 보호하고 데이터 은닉을 통해 객체의 무결성을 유지하는 데 사용됩니다.
@@ -212,6 +211,8 @@ counter.increment();
 console.log(counter.getCount()); // 1
 console.log(counter.#count); // SyntaxError: Private field '#count' must be declared in an enclosing class
 ```
+
+---
 
 ### 추상 클래스 패턴 적용
 
@@ -244,6 +245,8 @@ class Dog extends Animal {
 const dog = new Dog('Rex');
 dog.speak(); // Rex barks.
 ```
+
+---
 
 ### 클래스 필드의 활용
 
