@@ -1,18 +1,18 @@
 
-var ES5 = function (name) {
-  this.name = name;
+var ES7 = function (name) {
+  this.game = name;
 };
 
-ES5.staticMethod = function () {
-  return this.name + " staticMethod";
+ES7.staticMethod = function () {
+  return this;
 };
 
-ES5.prototype.method = function () {
-  return this.name + " method";
+ES7.prototype.method = function () {
+  return this
 };
 
-var es5Instance = new ES5("es2");
-console.log(ES5.staticMethod()); 
+var es5Instance = new ES7("es2");
+console.log(ES7.staticMethod()); 
 console.log(es5Instance.method()); 
 
 var ES6 = class {
@@ -70,6 +70,3 @@ Square.prototype.getArea = function () {
 var sq = new Square(5);
 console.log(sq.getArea());  // 25
 
-Square.prototype.width = 2;
-delete sq.width;
-console.log(sq.getArea()); //4
