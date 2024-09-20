@@ -1,6 +1,6 @@
 
 var ES7 = function (name) {
-  this.name = name;
+  this.game = name;
 };
 
 ES7.staticMethod = function () {
@@ -8,7 +8,7 @@ ES7.staticMethod = function () {
 };
 
 ES7.prototype.method = function () {
-  return this.name + " method";
+  return this
 };
 
 var es5Instance = new ES7("es2");
